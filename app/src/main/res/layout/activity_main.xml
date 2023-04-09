@@ -12,19 +12,27 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to car crash game!"
+        android:text="Welcome to car crash game 2!"
         android:layout_marginTop="60dp"
         android:gravity="center_horizontal"
         android:textSize="24sp"
         android:textStyle="bold"
         />
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/main_BTN_startGame"
+        android:id="@+id/main_BTN_startGameWithButtons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="400dp"
         android:gravity="center_horizontal"
-        android:text="Start Game!"
+        android:text="Start Game \n With buttons"
+        />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/main_BTN_startGameWithSensor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:text="Start Game \n With Sensor"
         />
 
 </LinearLayout>

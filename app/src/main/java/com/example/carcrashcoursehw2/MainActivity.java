@@ -12,11 +12,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button startGameBTN;
+        Button startGameBTN,startGameSensor;
 
-        startGameBTN=findViewById(R.id.main_BTN_startGame);
+        startGameBTN=findViewById(R.id.main_BTN_startGameWithButtons);
         startGameBTN.setOnClickListener(view -> {
             startActivity(new Intent(MainActivity.this,game_content.class));
+            finish();
+        });
+
+        startGameSensor=findViewById(R.id.main_BTN_startGameWithSensor);
+        startGameSensor.setOnClickListener(view -> {
+            startActivity(new Intent(MainActivity.this,game_content_sensor.class));
             finish();
         });
     }
