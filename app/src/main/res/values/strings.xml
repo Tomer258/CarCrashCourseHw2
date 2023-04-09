@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">CarCrashCourseHw2</string>
+    <string name="deer">Deer</string>
+    <string name="rightbtn">rightBTN</string>
+    <string name="health_heart1">Health_Heart1</string>
+    <string name="health_heart2">Health_Heart2</string>
+    <string name="health_heart3">Health_Heart3</string>
+    <string name="carlane3">carLane3</string>
+    <string name="carlane2">carLane2</string>
+    <string name="carlane1">carLane1</string>
+    <string name="leftbtn">leftBTN</string>
 </resources>
