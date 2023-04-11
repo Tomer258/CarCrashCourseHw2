@@ -8,35 +8,62 @@
     android:gravity="bottom"
     android:background="@drawable/backgroundcar"
     android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="160dp"
-        android:layout_height="50dp"
-        android:layout_gravity="end"
-        android:layout_marginTop="10dp"
-        >
-        <ImageView
-            android:id="@+id/heart1"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/heart"
-            android:contentDescription="@string/health_heart1"/>
-        <ImageView
-            android:id="@+id/heart2"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/heart"
-            android:layout_marginHorizontal="5dp"
-            android:contentDescription="@string/health_heart2"
-            />
-        <ImageView
-            android:id="@+id/heart3"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/heart"
-            android:contentDescription="@string/health_heart3"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/distanceText"
+            android:text="Distance:"
+            android:textSize="24sp"
+
+            android:layout_marginTop="15dp"
             />
 
-    </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/score"
+            android:layout_toEndOf="@+id/distanceText"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="5dp"
+            android:text="0"
+            android:textSize="24sp"
+            />
+
+        <LinearLayout
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentEnd="true"
+            >
+            <ImageView
+                android:id="@+id/heart1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/heart"
+                android:contentDescription="@string/health_heart1"/>
+            <ImageView
+                android:id="@+id/heart2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/heart"
+                android:layout_marginHorizontal="5dp"
+                android:contentDescription="@string/health_heart2"
+                />
+            <ImageView
+                android:id="@+id/heart3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/heart"
+                android:contentDescription="@string/health_heart3"
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:baselineAligned="false"

@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import com.example.carcrashcoursehw2.R;
 
 public class Lane {
-    private int isCarInLane = 0;
+    private int isCarInLane = 0,isCoin=0;
     private ImageView[] objects;
     private int laneIndex=0;
     private  int isDeerRunning=0;
@@ -40,7 +40,10 @@ public class Lane {
         } else {
             Log.i("SetCarInLane", "Car not toggled");
             this.setIsCarInLane(0);
-            this.objects[7].setImageResource(R.drawable.plyo_w39i_210318_ss4mp_generated);
+            if (this.getIsCoin()==0)
+                this.objects[7].setImageResource(R.drawable.plyo_w39i_210318_ss4mp_generated);
+            else
+                this.objects[7].setImageResource(R.drawable.coin);
             this.objects[7].setVisibility(View.INVISIBLE);
         }
     }
@@ -71,6 +74,27 @@ public class Lane {
         this.isCarInLane = isCarInLane;
     }//setting if car is in lane within the instance
 
+    public int getIsCoin() {
+        return isCoin;
+    }
 
+    public void setIsCoin(int isCoin) {
+        this.isCoin = isCoin;
+    }
+    public  void setLaneToCoin()
+    {
+        for (ImageView object : objects)
+        {
+                object.setImageResource(R.drawable.coin);
+        }
+        if (this.isCarInLane==1)
+            objects[7].setImageResource(R.drawable.car);
+    }
+    public  void setLaneToDeer()
+    {
+        for (ImageView object : objects) {
+            object.setImageResource(R.drawable.plyo_w39i_210318_ss4mp_generated);
+        }
+    }
 
 }

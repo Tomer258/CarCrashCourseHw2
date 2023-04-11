@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.carcrashcoursehw2.logic.Lane;
 import com.example.carcrashcoursehw2.logic.gameManager;
 
 public class game_content_sensor extends AppCompatActivity {
     private ImageButton rightBtn,leftBtn;
+    private TextView score;
     private gameManager gm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class game_content_sensor extends AppCompatActivity {
     }
 
     private void initialGameManager() {
+        score=findViewById(R.id.score);
         ImageView[] iLane1 ={findViewById(R.id.firstLaneDeer1),findViewById(R.id.firstLaneDeer2),
                 findViewById(R.id.firstLaneDeer3),findViewById(R.id.firstLaneDeer4),
                 findViewById(R.id.firstLaneDeer5),findViewById(R.id.firstLaneDeer6),
@@ -70,7 +73,7 @@ public class game_content_sensor extends AppCompatActivity {
         Lane mLane4= new Lane(0,iLane4);
         Lane mLane5= new Lane(0,iLane5);
         gm =new gameManager(this,new Lane[]{mLane1, mLane2, mLane3, mLane4, mLane5},
-            new ImageView[]{findViewById(R.id.heart1),findViewById(R.id.heart2),findViewById(R.id.heart3)});
+            new ImageView[]{findViewById(R.id.heart1),findViewById(R.id.heart2),findViewById(R.id.heart3)},score);
 
     }
     private void initialStartingValues() {
