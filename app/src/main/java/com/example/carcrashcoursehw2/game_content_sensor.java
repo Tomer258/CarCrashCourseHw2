@@ -2,29 +2,37 @@ package com.example.carcrashcoursehw2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.carcrashcoursehw2.logic.Lane;
 import com.example.carcrashcoursehw2.logic.gameManager;
 
-public class game_content_sensor extends AppCompatActivity {
-    private ImageButton rightBtn,leftBtn;
-    private TextView score;
+public class game_content_sensor extends AppCompatActivity implements SensorEventListener {
+
+    private SensorManager sensorManager;
+    private Sensor gyroscope;
+    private float rollAngle = 0.0f;
+
     private gameManager gm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_content);
+        setContentView(R.layout.activity_game_content_sensor);
         initialStartingValues();
         initialGameManager();
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        sensorManager.unregisterListener(this);
         gm.killHandler();
     }
 
@@ -37,11 +45,12 @@ public class game_content_sensor extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
         gm.restartHandler();
     }
 
     private void initialGameManager() {
-        score=findViewById(R.id.score);
+        TextView score = findViewById(R.id.score);
         ImageView[] iLane1 ={findViewById(R.id.firstLaneDeer1),findViewById(R.id.firstLaneDeer2),
                 findViewById(R.id.firstLaneDeer3),findViewById(R.id.firstLaneDeer4),
                 findViewById(R.id.firstLaneDeer5),findViewById(R.id.firstLaneDeer6),
@@ -68,23 +77,44 @@ public class game_content_sensor extends AppCompatActivity {
                 findViewById(R.id.FifthLaneDeer7),findViewById(R.id.specialPosFifthLane)};
 
         Lane mLane1 = new Lane(0, iLane1);
-        Lane mLane2= new Lane(1,iLane2);
-        Lane mLane3= new Lane(0,iLane3);
+        Lane mLane2= new Lane(0,iLane2);
+        Lane mLane3= new Lane(1,iLane3);
         Lane mLane4= new Lane(0,iLane4);
         Lane mLane5= new Lane(0,iLane5);
         gm =new gameManager(this,new Lane[]{mLane1, mLane2, mLane3, mLane4, mLane5},
-            new ImageView[]{findViewById(R.id.heart1),findViewById(R.id.heart2),findViewById(R.id.heart3)},score,0);
+            new ImageView[]{findViewById(R.id.heart1),findViewById(R.id.heart2),findViewById(R.id.heart3)}, score,500);
 
     }
     private void initialStartingValues() {
-        //rightBtn=findViewById(R.id.RightBTN);
-       // leftBtn=findViewById(R.id.leftBTN);
-        //setBtnOnClicks();
+        sensorManager = (SensorManager) getSystemService(this.SENSOR_SERVICE);
+        gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
     }
 
-    private void setBtnOnClicks() {
-       // rightBtn.setOnClickListener(v -> gm.moveCar(1));
-        //leftBtn.setOnClickListener(v -> gm.moveCar(0));
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+
+            float deltaRoll = y * (180 / (float) Math.PI) * (event.timestamp - rollAngle) / 1000000000.0f;
+            rollAngle = event.timestamp;
+
+            if (deltaRoll < -5) {
+                // Phone is rolled left
+                gm.moveCar(0);
+            } else if (deltaRoll > 5) {
+                // Phone is rolled right
+                gm.moveCar(1);
+            } else {
+                // Phone is not rolled
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        // Do nothing
     }
 
 

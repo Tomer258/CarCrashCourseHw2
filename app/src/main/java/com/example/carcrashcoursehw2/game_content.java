@@ -12,7 +12,6 @@ import com.example.carcrashcoursehw2.logic.gameManager;
 import com.example.carcrashcoursehw2.logic.Lane;
 
 public class game_content extends AppCompatActivity {
-    private static final String DB_FILE = "DB_FILE";
     private ImageButton rightBtn,leftBtn;
     private TextView score;
     private gameManager gm;
@@ -43,13 +42,9 @@ public class game_content extends AppCompatActivity {
     }
 
     private void initialGameManager() {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(DB_FILE, this.MODE_PRIVATE);
-        String speed=sharedPreferences.getString("speed","fast");
-        int delay;
-        if (speed.equals("fast"))
-            delay=250;
-        else
-            delay=500;
+
+        int delay=getIntent().getIntExtra("speed",1000);
+
         score=findViewById(R.id.score);
         ImageView[] iLane1 ={findViewById(R.id.firstLaneDeer1),findViewById(R.id.firstLaneDeer2),
                             findViewById(R.id.firstLaneDeer3),findViewById(R.id.firstLaneDeer4),
