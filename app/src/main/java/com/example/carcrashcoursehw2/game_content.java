@@ -1,5 +1,6 @@
 package com.example.carcrashcoursehw2;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import com.example.carcrashcoursehw2.logic.gameManager;
 import com.example.carcrashcoursehw2.logic.Lane;
 
 public class game_content extends AppCompatActivity {
+    private static final String DB_FILE = "DB_FILE";
     private ImageButton rightBtn,leftBtn;
     private TextView score;
     private gameManager gm;
@@ -41,6 +43,13 @@ public class game_content extends AppCompatActivity {
     }
 
     private void initialGameManager() {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(DB_FILE, this.MODE_PRIVATE);
+        String speed=sharedPreferences.getString("speed","fast");
+        int delay;
+        if (speed.equals("fast"))
+            delay=250;
+        else
+            delay=500;
         score=findViewById(R.id.score);
         ImageView[] iLane1 ={findViewById(R.id.firstLaneDeer1),findViewById(R.id.firstLaneDeer2),
                             findViewById(R.id.firstLaneDeer3),findViewById(R.id.firstLaneDeer4),
@@ -73,7 +82,7 @@ public class game_content extends AppCompatActivity {
         Lane mLane4= new Lane(0,iLane4);
         Lane mLane5= new Lane(0,iLane5);
         gm =new gameManager(this,new Lane[]{mLane1, mLane2, mLane3, mLane4, mLane5},
-            new ImageView[]{findViewById(R.id.heart1),findViewById(R.id.heart2),findViewById(R.id.heart3)},score);
+            new ImageView[]{findViewById(R.id.heart1),findViewById(R.id.heart2),findViewById(R.id.heart3)},score,delay);
 
     }
     private void initialStartingValues() {

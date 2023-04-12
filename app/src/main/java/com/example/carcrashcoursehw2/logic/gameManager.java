@@ -24,7 +24,7 @@ public class gameManager {
    private final TextView score;
    private final Lane[] lanes;
    private final ImageView[] hearts;
-   private int droppedHeartCounter = 0,max=0,scoreInNum=0,distanceCounter=0;
+   private int droppedHeartCounter = 0,max=0,scoreInNum=0,distanceCounter=0,delay=500;
    private final Context c;
    Vibrator vibrator;
    private MediaPlayer mediaPlayer;
@@ -33,13 +33,14 @@ public class gameManager {
 
    Runnable runnable2;
 
-   public gameManager(Context c, Lane[] lanes, ImageView[] hearts, TextView score) {
+   public gameManager(Context c, Lane[] lanes, ImageView[] hearts, TextView score,int delay) {
       this.c = c;
       vibrator = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);
       this.lanes = lanes;
       this.hearts = hearts;
       this.score=score;
       mediaPlayer=MediaPlayer.create(c, R.raw.crash);
+      this.delay=delay;
    }
 
    public void moveCar(int direction)//1 = Right, 0 = Left, Works only with 5 Lanes!!!!!
@@ -286,7 +287,7 @@ public class gameManager {
             }
             else
                distanceCounter++;
-            handler1.postDelayed(this, 500);
+            handler1.postDelayed(this, delay);
          }
       };
       handler1.postDelayed(runnable2,0);
@@ -300,7 +301,7 @@ public class gameManager {
    }
    public void killHandler()
    {
-      handler1.removeCallbacks(null);
+      handler1.removeCallbacks(runnable2);
    }
    public void restartHandler()
    {
