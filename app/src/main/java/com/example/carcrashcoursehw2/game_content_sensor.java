@@ -46,7 +46,7 @@ public class game_content_sensor extends AppCompatActivity implements SensorEven
     protected void onResume() {
         super.onResume();
         sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
-        gm.restartHandler();
+        //gm.restartHandler();
     }
 
     private void initialGameManager() {
@@ -81,8 +81,8 @@ public class game_content_sensor extends AppCompatActivity implements SensorEven
         Lane mLane3= new Lane(1,iLane3);
         Lane mLane4= new Lane(0,iLane4);
         Lane mLane5= new Lane(0,iLane5);
-        gm =new gameManager(this,new Lane[]{mLane1, mLane2, mLane3, mLane4, mLane5},
-            new ImageView[]{findViewById(R.id.heart1),findViewById(R.id.heart2),findViewById(R.id.heart3)}, score,500);
+       // gm =new gameManager(this,new Lane[]{mLane1, mLane2, mLane3, mLane4, mLane5},
+            //new ImageView[]{findViewById(R.id.heart1),findViewById(R.id.heart2),findViewById(R.id.heart3)}, score,500,);
 
     }
     private void initialStartingValues() {

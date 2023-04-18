@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         startFastGameBTN.setOnClickListener(view -> {
             Intent intent=new Intent(MainActivity.this,game_content.class);
             intent.putExtra("speed",250);
+            intent.putExtra("mode",0);
             startActivity(intent);
             finish();
         });
@@ -28,13 +29,17 @@ public class MainActivity extends AppCompatActivity {
         startSlowGameBTN.setOnClickListener(view -> {
             Intent intent=new Intent(MainActivity.this,game_content.class);
             intent.putExtra("speed",500);
+            intent.putExtra("mode",0);
             startActivity(intent);
             finish();
         });
 
         startGameSensor=findViewById(R.id.main_BTN_startGameWithSensor);
         startGameSensor.setOnClickListener(view -> {
-            startActivity(new Intent(MainActivity.this,game_content_sensor.class));
+            Intent intent=new Intent(MainActivity.this,game_content.class);
+            intent.putExtra("mode",1);
+            intent.putExtra("speed",500);
+            startActivity(intent);
             finish();
         });
     }

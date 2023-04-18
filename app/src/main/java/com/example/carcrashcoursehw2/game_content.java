@@ -1,9 +1,15 @@
 package com.example.carcrashcoursehw2;
 
 import android.content.SharedPreferences;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,9 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.carcrashcoursehw2.logic.gameManager;
 import com.example.carcrashcoursehw2.logic.Lane;
 
-public class game_content extends AppCompatActivity {
+public class game_content extends AppCompatActivity implements SensorEventListener {
     private ImageButton rightBtn,leftBtn;
-    private TextView score;
+    private TextView score,points;
+
+    private SensorManager sensorManager;
+    private Sensor gyroscope;
+    private float rollAngle = 0.0f;
     private gameManager gm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +36,7 @@ public class game_content extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        sensorManager.unregisterListener(this);
         gm.killHandler();
     }
 
@@ -38,6 +49,7 @@ public class game_content extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
         gm.restartHandler();
     }
 
@@ -46,6 +58,7 @@ public class game_content extends AppCompatActivity {
         int delay=getIntent().getIntExtra("speed",1000);
 
         score=findViewById(R.id.score);
+        points.findViewById(R.id.points);
         ImageView[] iLane1 ={findViewById(R.id.firstLaneDeer1),findViewById(R.id.firstLaneDeer2),
                             findViewById(R.id.firstLaneDeer3),findViewById(R.id.firstLaneDeer4),
                             findViewById(R.id.firstLaneDeer5),findViewById(R.id.firstLaneDeer6),
@@ -77,21 +90,67 @@ public class game_content extends AppCompatActivity {
         Lane mLane4= new Lane(0,iLane4);
         Lane mLane5= new Lane(0,iLane5);
         gm =new gameManager(this,new Lane[]{mLane1, mLane2, mLane3, mLane4, mLane5},
-            new ImageView[]{findViewById(R.id.heart1),findViewById(R.id.heart2),findViewById(R.id.heart3)},score,delay);
+            new ImageView[]{findViewById(R.id.heart1),findViewById(R.id.heart2),findViewById(R.id.heart3)},score,delay,points);
 
     }
     private void initialStartingValues() {
-        rightBtn=findViewById(R.id.RightBTN);
-        leftBtn=findViewById(R.id.leftBTN);
-        setBtnOnClicks();
+        int mode=getIntent().getIntExtra("mode",-1);
+        switch (mode)
+        {
+            case 0:
+            {
+                setBtnOnClicks();
+            }
+            case 1:
+            {
+                LinearLayout linearLayout=(LinearLayout)findViewById(R.id.buttonsLayout);
+                linearLayout.setVisibility(View.GONE);
+                initialSensor();
+            }
+        }
+
+    }
+
+    private void initialSensor()
+    {
+        sensorManager = (SensorManager) getSystemService(this.SENSOR_SERVICE);
+        gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
     }
 
     private void setBtnOnClicks() {
+        rightBtn=findViewById(R.id.RightBTN);
+        leftBtn=findViewById(R.id.leftBTN);
+
         rightBtn.setOnClickListener(v -> gm.moveCar(1));
         leftBtn.setOnClickListener(v -> gm.moveCar(0));
     }
 
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
 
+            float deltaRoll = y * (180 / (float) Math.PI) * (event.timestamp - rollAngle) / 1000000000.0f;
+            rollAngle = event.timestamp;
+
+            if (deltaRoll < -5) {
+                // Phone is rolled left
+                gm.moveCar(0);
+            } else if (deltaRoll > 5) {
+                // Phone is rolled right
+                gm.moveCar(1);
+            } else {
+                // Phone is not rolled
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        // Do nothing
+    }
 
 
 }

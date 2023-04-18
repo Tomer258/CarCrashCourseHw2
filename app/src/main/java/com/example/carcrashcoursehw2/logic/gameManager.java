@@ -19,12 +19,13 @@ import java.util.Random;
 
 
 public class gameManager {
+   private  final int POINTS_ADD = 10;
    Random r = new Random();
    private final int SCORE_ADD=8;
-   private final TextView score;
+   private final TextView score,points;
    private final Lane[] lanes;
    private final ImageView[] hearts;
-   private int droppedHeartCounter = 0,max=0,scoreInNum=0,distanceCounter=0,delay=500;
+   private int droppedHeartCounter = 0,max=0,scoreInNum=0,distanceCounter=0,delay,pointsInNum=0;
    private final Context c;
    Vibrator vibrator;
    private MediaPlayer mediaPlayer;
@@ -33,12 +34,13 @@ public class gameManager {
 
    Runnable runnable2;
 
-   public gameManager(Context c, Lane[] lanes, ImageView[] hearts, TextView score,int delay) {
+   public gameManager(Context c, Lane[] lanes, ImageView[] hearts, TextView score,int delay, TextView points) {
       this.c = c;
       vibrator = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);
       this.lanes = lanes;
       this.hearts = hearts;
       this.score=score;
+      this.points=points;
       mediaPlayer=MediaPlayer.create(c, R.raw.crash);
       this.delay=delay;
    }
@@ -322,7 +324,8 @@ public class gameManager {
       return (r.nextInt(100)>=40);
    }
    private void addPoints() {
-      Log.i("Coin: "," +10 Points!");
+      pointsInNum+=POINTS_ADD;
+      points.setText("" +pointsInNum);
    }
    private  void addScore()
    {
