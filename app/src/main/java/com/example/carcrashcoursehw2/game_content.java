@@ -24,6 +24,8 @@ public class game_content extends AppCompatActivity implements SensorEventListen
     private SensorManager sensorManager;
     private Sensor gyroscope;
     private float rollAngle = 0.0f;
+    private int workMod=2;
+
     private gameManager gm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,8 @@ public class game_content extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onPause() {
         super.onPause();
-        sensorManager.unregisterListener(this);
+        if (workMod==1)
+            sensorManager.unregisterListener(this);
         gm.killHandler();
     }
 
@@ -49,7 +52,8 @@ public class game_content extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onResume() {
         super.onResume();
-        sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
+        if (workMod==1)
+            sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
         gm.restartHandler();
     }
 
@@ -58,7 +62,7 @@ public class game_content extends AppCompatActivity implements SensorEventListen
         int delay=getIntent().getIntExtra("speed",1000);
 
         score=findViewById(R.id.score);
-        points.findViewById(R.id.points);
+        points=findViewById(R.id.points);
         ImageView[] iLane1 ={findViewById(R.id.firstLaneDeer1),findViewById(R.id.firstLaneDeer2),
                             findViewById(R.id.firstLaneDeer3),findViewById(R.id.firstLaneDeer4),
                             findViewById(R.id.firstLaneDeer5),findViewById(R.id.firstLaneDeer6),
@@ -94,18 +98,21 @@ public class game_content extends AppCompatActivity implements SensorEventListen
 
     }
     private void initialStartingValues() {
-        int mode=getIntent().getIntExtra("mode",-1);
+        int mode=getIntent().getIntExtra("mode",2);
+        this.workMod=mode;
         switch (mode)
         {
             case 0:
             {
                 setBtnOnClicks();
+                break;
             }
             case 1:
             {
                 LinearLayout linearLayout=(LinearLayout)findViewById(R.id.buttonsLayout);
                 linearLayout.setVisibility(View.GONE);
                 initialSensor();
+                break;
             }
         }
 
