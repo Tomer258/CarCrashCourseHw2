@@ -5,6 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.example.carcrashcoursehw2.Utilities.DeviceLocationManager;
+import com.example.carcrashcoursehw2.Utilities.SignalGenerator;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -49,6 +53,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+
+        if (DeviceLocationManager.getInstance().isGPSOn()) //check is GPS Enabled
+            DeviceLocationManager.getInstance().checkLocationPermission(this);
+        else
+            SignalGenerator.getInstance().toast("GPS is off", Toast.LENGTH_SHORT);
+
     }
 
 }

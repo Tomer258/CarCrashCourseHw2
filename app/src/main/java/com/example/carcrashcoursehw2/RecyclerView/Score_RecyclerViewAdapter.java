@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.carcrashcoursehw2.Interfaces.CallBack_sendXY;
 import com.example.carcrashcoursehw2.R;
 import com.google.gson.Gson;
 import com.paz.prefy_lib.Prefy;
@@ -20,10 +22,12 @@ public class Score_RecyclerViewAdapter extends RecyclerView.Adapter<Score_Recycl
 
     Context context;
     ArrayList<ScoreModel> scores;
-    public Score_RecyclerViewAdapter(Context context, ArrayList<ScoreModel> scores)
+    CallBack_sendXY callBack_sendXY;
+    public Score_RecyclerViewAdapter(Context context, ArrayList<ScoreModel> scores,CallBack_sendXY callBack_sendXY)
     {
         this.context=context;
         this.scores=scores;
+        this.callBack_sendXY=callBack_sendXY;
 
     }
 
@@ -42,6 +46,12 @@ public class Score_RecyclerViewAdapter extends RecyclerView.Adapter<Score_Recycl
         holder.dateView.setText(scores.get(position).getDate());
         holder.distanceView.setText(scores.get(position).getDistance()+"");
         holder.posView.setText((position+1)+"");
+        holder.mCardView.setOnClickListener(view -> {
+            double x=scores.get(position).getX();
+            double y=scores.get(position).getY();
+            if (callBack_sendXY!=null)
+                callBack_sendXY.sendXy(x,y);
+        });
 
     }
 
@@ -57,6 +67,7 @@ public class Score_RecyclerViewAdapter extends RecyclerView.Adapter<Score_Recycl
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView scoreView,dateView,distanceView,posView;
+        CardView mCardView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +75,7 @@ public class Score_RecyclerViewAdapter extends RecyclerView.Adapter<Score_Recycl
             dateView=itemView.findViewById(R.id.date);
             distanceView=itemView.findViewById(R.id.numOfDis);
             posView=itemView.findViewById(R.id.pos);
+            mCardView=itemView.findViewById(R.id.mCardView);
         }
     }
 }

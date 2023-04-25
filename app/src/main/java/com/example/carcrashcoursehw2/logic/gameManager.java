@@ -19,8 +19,10 @@ import com.example.carcrashcoursehw2.GameEnd;
 import com.example.carcrashcoursehw2.R;
 import com.example.carcrashcoursehw2.RecyclerView.ScoreList;
 import com.example.carcrashcoursehw2.RecyclerView.ScoreModel;
+import com.example.carcrashcoursehw2.Utilities.DeviceLocationManager;
 import com.example.carcrashcoursehw2.Utilities.SignalGenerator;
 import com.example.carcrashcoursehw2.Utilities.sharedPref;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.paz.prefy_lib.Prefy;
@@ -32,7 +34,6 @@ import java.util.Random;
 public class gameManager {
    Prefy prefy= Prefy.getInstance();
    ScoreModel scoreModel;
-
    ScoreList scoreList;
    private  final int POINTS_ADD = 10;
    Random r = new Random();
@@ -315,14 +316,18 @@ public class gameManager {
       return r.nextInt(5);
    }
    private void gameOver() {
+      double x = DeviceLocationManager.getInstance().getX();
+      double y = DeviceLocationManager.getInstance().getY();
       String fromJson=sharedPref.getInstance().getString("scores","");
       this.scoreList=new Gson().fromJson(fromJson, ScoreList.class);
       if (scoreList==null)
       {
          scoreList=new ScoreList();
       }
-      scoreList.addScore(this.pointsInNum,this.scoreInNum,0,0);
-      Log.d("SCORE MODEL ADD",scoreList.getScores().toString());
+      scoreList.addScore(this.pointsInNum,this.scoreInNum, x, y);
+      Log.i("XY","--------------------------");
+      Log.i("XY","X: " +DeviceLocationManager.getInstance().getX() +" Y: " +DeviceLocationManager.getInstance().getY());
+      Log.i("XY","--------------------------");
       String toJson= new Gson().toJson(scoreList);
       sharedPref.getInstance().putString("scores",toJson);
       c.startActivity(new Intent(c, GameEnd.class));

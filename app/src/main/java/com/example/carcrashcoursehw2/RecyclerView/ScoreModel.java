@@ -9,6 +9,9 @@ public class ScoreModel {
     int distance;
 
     double x,y;
+
+
+
     String date;
     public ScoreModel(int score, int distance,double x,double y) {
         this.score = score;
@@ -40,5 +43,12 @@ public class ScoreModel {
             return false;
     }
 
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
 
 }

@@ -2,6 +2,7 @@ package com.example.carcrashcoursehw2;
 
 import android.app.Application;
 
+import com.example.carcrashcoursehw2.Utilities.DeviceLocationManager;
 import com.example.carcrashcoursehw2.Utilities.sharedPref;
 import com.example.carcrashcoursehw2.Utilities.SignalGenerator;
 import com.paz.prefy_lib.Prefy;
@@ -16,5 +17,6 @@ public class App extends Application {
         sharedPref.init(this);
         SignalGenerator.init(this);
         Prefy.init(this,false);
+        DeviceLocationManager.init(this);
     }
 }

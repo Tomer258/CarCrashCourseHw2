@@ -17,10 +17,6 @@ public class ScoreList
         return this.scores;
     }
 
-    public void setScores(ArrayList<ScoreModel> scores) {
-        this.scores = scores;
-    }
-
     public void addScore(int points,int dist,double x,double y)
     {
         if (scores.size()==0)

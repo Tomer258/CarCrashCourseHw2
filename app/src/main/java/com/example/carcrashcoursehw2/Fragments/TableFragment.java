@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.carcrashcoursehw2.Interfaces.CallBack_sendXY;
 import com.example.carcrashcoursehw2.R;
 import com.example.carcrashcoursehw2.RecyclerView.ScoreList;
 import com.example.carcrashcoursehw2.RecyclerView.ScoreModel;
@@ -24,8 +25,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class TableFragment extends Fragment {
-    ScoreList scoreList=new ScoreList();
-
+    private ScoreList scoreList=new ScoreList();
+    private CallBack_sendXY callBack_sendXY;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,14 +38,15 @@ public class TableFragment extends Fragment {
         //no data in recyclerView yet
         String fromJson=sharedPref.getInstance().getString("scores","");
         this.scoreList=new Gson().fromJson(fromJson, ScoreList.class);
-        ArrayList<ScoreModel> test=scoreList.getScores();
-        Log.d("FRAGMENT TEST",test.toString());
 
 
-
-        Score_RecyclerViewAdapter adapter=new Score_RecyclerViewAdapter(view.getContext(),scoreList.getScores());
+        Score_RecyclerViewAdapter adapter=new Score_RecyclerViewAdapter(view.getContext(),scoreList.getScores(),callBack_sendXY);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         return view;
+    }
+    public void setCallBack_sendXY(CallBack_sendXY callBack_sendXY)
+    {
+        this.callBack_sendXY=callBack_sendXY;
     }
 }

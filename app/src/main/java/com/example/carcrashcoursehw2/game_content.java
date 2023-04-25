@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.carcrashcoursehw2.Utilities.DeviceLocationManager;
 import com.example.carcrashcoursehw2.logic.gameManager;
 import com.example.carcrashcoursehw2.logic.Lane;
 
@@ -31,6 +32,7 @@ public class game_content extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_content);
+        DeviceLocationManager.getInstance().startLocationUpdates(this);
         initialStartingValues();
         initialGameManager();
     }

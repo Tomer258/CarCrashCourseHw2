@@ -22,11 +22,6 @@
             android:name=".GameEnd"
             android:exported="false" />
         <activity
-            android:name=".game_content_sensor"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
             android:name=".game_content"
             android:exported="false"
             android:screenOrientation="portrait"
@@ -42,6 +37,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCrMf6mM9QZ_01l2PSB6tQvr4aygvxg0oU"/>
     </application>
 
 </manifest>
