@@ -32,6 +32,8 @@ import java.util.Random;
 public class gameManager {
    Prefy prefy= Prefy.getInstance();
    ScoreModel scoreModel;
+
+   ScoreList scoreList;
    private  final int POINTS_ADD = 10;
    Random r = new Random();
    private final int SCORE_ADD=8;
@@ -313,11 +315,15 @@ public class gameManager {
       return r.nextInt(5);
    }
    private void gameOver() {
-      scoreModel=new ScoreModel(this.pointsInNum,this.scoreInNum,0,0);
-      ScoreList scoreList=new ScoreList();
-
-
-      String toJson= new Gson().toJson(scoreList.getScores().add(scoreModel));
+      String fromJson=sharedPref.getInstance().getString("scores","");
+      this.scoreList=new Gson().fromJson(fromJson, ScoreList.class);
+      if (scoreList==null)
+      {
+         scoreList=new ScoreList();
+      }
+      scoreList.addScore(this.pointsInNum,this.scoreInNum,0,0);
+      Log.d("SCORE MODEL ADD",scoreList.getScores().toString());
+      String toJson= new Gson().toJson(scoreList);
       sharedPref.getInstance().putString("scores",toJson);
       c.startActivity(new Intent(c, GameEnd.class));
       Log.i("Game Manager: ", "GAME OVER");

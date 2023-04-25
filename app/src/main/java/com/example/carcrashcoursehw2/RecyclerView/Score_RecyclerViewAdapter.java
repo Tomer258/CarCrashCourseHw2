@@ -38,10 +38,11 @@ public class Score_RecyclerViewAdapter extends RecyclerView.Adapter<Score_Recycl
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Score_RecyclerViewAdapter.MyViewHolder holder, int position) {
-        ScoreModel model=getItem(position);
-        holder.scoreView.setText(model.getScore());
-        holder.dateView.setText(model.getDate());
-        holder.distanceView.setText(model.getDistance());
+        holder.scoreView.setText(scores.get(position).getScore()+"");
+        holder.dateView.setText(scores.get(position).getDate());
+        holder.distanceView.setText(scores.get(position).getDistance()+"");
+        holder.posView.setText((position+1)+"");
+
     }
 
     @Override
@@ -55,13 +56,14 @@ public class Score_RecyclerViewAdapter extends RecyclerView.Adapter<Score_Recycl
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView scoreView,dateView,distanceView;
+        TextView scoreView,dateView,distanceView,posView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             scoreView=itemView.findViewById(R.id.num);
             dateView=itemView.findViewById(R.id.date);
             distanceView=itemView.findViewById(R.id.numOfDis);
+            posView=itemView.findViewById(R.id.pos);
         }
     }
 }
