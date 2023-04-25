@@ -52,13 +52,39 @@
                 />
 
             <TextView
+                android:id="@+id/Distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Distance: "
+                android:layout_marginLeft="5dp"
+                android:textSize="24sp"
+                android:layout_toRightOf="@+id/trophyImg"
+                android:layout_below="@id/score"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/numOfDis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_marginLeft="5dp"
+                android:textSize="24sp"
+                android:layout_toRightOf="@+id/Distance"
+                android:layout_below="@id/score"
+                android:textStyle="bold"
+                />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/date"
                 android:text="date"
-                android:layout_toRightOf="@+id/trophyImg"
-                android:layout_below="@id/score"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginLeft="5dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
                 />
 
         </RelativeLayout>

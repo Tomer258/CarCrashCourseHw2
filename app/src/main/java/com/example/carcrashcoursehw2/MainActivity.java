@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button startFastGameBTN,startSlowGameBTN,startGameSensor;
+        Button startFastGameBTN,startSlowGameBTN,startGameSensor,leaderBoard;
 
 
 
@@ -39,6 +39,13 @@ public class MainActivity extends AppCompatActivity {
             Intent intent=new Intent(MainActivity.this,game_content.class);
             intent.putExtra("mode",1);
             intent.putExtra("speed",500);
+            startActivity(intent);
+            finish();
+        });
+
+        leaderBoard=findViewById(R.id.main_BTN_leadBoard);
+        leaderBoard.setOnClickListener(view -> {
+            Intent intent=new Intent(MainActivity.this,GameEnd.class);
             startActivity(intent);
             finish();
         });

@@ -22,7 +22,7 @@
         android:id="@+id/startGameWithButtonsFast"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="300dp"
         android:gravity="center_horizontal"
         android:text="Start Fast Game \n With buttons"
         />
@@ -41,6 +41,15 @@
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
         android:text="Start Game \n With Sensor"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/main_BTN_leadBoard"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:text="leaderBoard"
         />
 
 </LinearLayout>

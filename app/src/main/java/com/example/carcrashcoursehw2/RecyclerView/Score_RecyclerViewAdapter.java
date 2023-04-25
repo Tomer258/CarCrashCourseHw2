@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carcrashcoursehw2.R;
+import com.google.gson.Gson;
+import com.paz.prefy_lib.Prefy;
 
 import java.util.ArrayList;
 
@@ -22,6 +24,7 @@ public class Score_RecyclerViewAdapter extends RecyclerView.Adapter<Score_Recycl
     {
         this.context=context;
         this.scores=scores;
+
     }
 
     @NonNull
@@ -35,23 +38,30 @@ public class Score_RecyclerViewAdapter extends RecyclerView.Adapter<Score_Recycl
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Score_RecyclerViewAdapter.MyViewHolder holder, int position) {
-        holder.scoreView.setText(scores.get(position).getScore()+"");
-        holder.dateView.setText(scores.get(position).getDate());
+        ScoreModel model=getItem(position);
+        holder.scoreView.setText(model.getScore());
+        holder.dateView.setText(model.getDate());
+        holder.distanceView.setText(model.getDistance());
     }
 
     @Override
     public int getItemCount() {
-        return scores.size();
+        return this.scores==null ? 0:this.scores.size();
+    }
+    public ScoreModel getItem(int position)
+    {
+        return this.scores.get(position);
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView scoreView,dateView;
+        TextView scoreView,dateView,distanceView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             scoreView=itemView.findViewById(R.id.num);
             dateView=itemView.findViewById(R.id.date);
+            distanceView=itemView.findViewById(R.id.numOfDis);
         }
     }
 }

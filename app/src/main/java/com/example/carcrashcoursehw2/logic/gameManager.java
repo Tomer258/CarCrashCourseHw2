@@ -1,6 +1,8 @@
 package com.example.carcrashcoursehw2.logic;
 
 import android.content.Context;
+import android.content.Intent;
+import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Looper;
@@ -13,12 +15,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.carcrashcoursehw2.GameEnd;
 import com.example.carcrashcoursehw2.R;
+import com.example.carcrashcoursehw2.RecyclerView.ScoreList;
+import com.example.carcrashcoursehw2.RecyclerView.ScoreModel;
+import com.example.carcrashcoursehw2.Utilities.SignalGenerator;
+import com.example.carcrashcoursehw2.Utilities.sharedPref;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.paz.prefy_lib.Prefy;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 
 public class gameManager {
+   Prefy prefy= Prefy.getInstance();
+   ScoreModel scoreModel;
    private  final int POINTS_ADD = 10;
    Random r = new Random();
    private final int SCORE_ADD=8;
@@ -205,7 +218,8 @@ public class gameManager {
       new Handler(Looper.getMainLooper()).post(() -> {
          Toast.makeText(c, "Ouch", Toast.LENGTH_SHORT).show();
          // Vibrate for 500 milliseconds
-         vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+         //vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+         SignalGenerator.getInstance().vibrate(500);
       });
    }
 
@@ -299,6 +313,13 @@ public class gameManager {
       return r.nextInt(5);
    }
    private void gameOver() {
+      scoreModel=new ScoreModel(this.pointsInNum,this.scoreInNum,0,0);
+      ScoreList scoreList=new ScoreList();
+
+
+      String toJson= new Gson().toJson(scoreList.getScores().add(scoreModel));
+      sharedPref.getInstance().putString("scores",toJson);
+      c.startActivity(new Intent(c, GameEnd.class));
       Log.i("Game Manager: ", "GAME OVER");
    }
    public void killHandler()
