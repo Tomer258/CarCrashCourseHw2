@@ -21,7 +21,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
 
 public class DeviceLocationManager {
-    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private Context context;
     private static DeviceLocationManager instance = null;
     private static FusedLocationProviderClient fusedLocationClient;
@@ -42,11 +41,6 @@ public class DeviceLocationManager {
             instance = new DeviceLocationManager(context);
         }
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
-        locationRequest = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 1000)
-                .setWaitForAccurateLocation(false)
-                .setMinUpdateIntervalMillis(500)
-                .setMaxUpdateDelayMillis(1000)
-                .build();
 
         locationCallback = new LocationCallback() {
             @Override
@@ -60,6 +54,13 @@ public class DeviceLocationManager {
                 }
             }
         };
+
+        locationRequest = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 1000).setWaitForAccurateLocation(false)
+                .setMinUpdateIntervalMillis(1000)
+                .setMaxUpdateDelayMillis(2000)
+                .build();
+
+
     }
     public void startLocationUpdates(Activity activity) {
        checkLocationPermission(activity);
@@ -82,7 +83,7 @@ public class DeviceLocationManager {
     }
 
 
-    public boolean checkLocationPermission(Activity activity)
+    public void checkLocationPermission(Activity activity)
     {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
@@ -100,7 +101,6 @@ public class DeviceLocationManager {
             }
         }
 
-        return  true;
     }
     public boolean isGPSOn() {
         return ((LocationManager) context.getSystemService(LOCATION_SERVICE)).isProviderEnabled(LocationManager.GPS_PROVIDER);
