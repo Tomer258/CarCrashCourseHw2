@@ -33,16 +33,6 @@ public class ScoreModel {
         return this.distance;
     }
 
-    public boolean scoreCompare(int points,int dist)
-    {
-        if (this.getScore()< points)
-            return true;
-        else if (this.getScore()==points)
-            return this.getDistance()< dist;
-        else
-            return false;
-    }
-
     public double getX() {
         return x;
     }

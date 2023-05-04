@@ -1,6 +1,8 @@
 package com.example.carcrashcoursehw2;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.carcrashcoursehw2.Fragments.MapFragment;
@@ -32,6 +34,14 @@ public class GameEnd extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         DeviceLocationManager.getInstance().stopLocationUpdates();
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(this,MainActivity.class));
+        finish();
     }
 
     @Override
