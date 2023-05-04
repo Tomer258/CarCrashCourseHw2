@@ -163,6 +163,7 @@ public class game_content extends AppCompatActivity implements SensorEventListen
             else {
                 // Phone is not rolled
             }
+
         }
     }
 

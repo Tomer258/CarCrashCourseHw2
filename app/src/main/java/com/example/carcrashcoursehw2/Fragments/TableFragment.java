@@ -38,7 +38,8 @@ public class TableFragment extends Fragment {
         //no data in recyclerView yet
         String fromJson=sharedPref.getInstance().getString("scores","");
         this.scoreList=new Gson().fromJson(fromJson, ScoreList.class);
-
+        if (scoreList==null)
+            scoreList=new ScoreList();
 
         Score_RecyclerViewAdapter adapter=new Score_RecyclerViewAdapter(view.getContext(),scoreList.getScores(),callBack_sendXY);
         recyclerView.setAdapter(adapter);
