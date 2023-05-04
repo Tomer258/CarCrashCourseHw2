@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         startGameSensor.setOnClickListener(view -> {
             Intent intent=new Intent(MainActivity.this,game_content.class);
             intent.putExtra("mode",1);
-            intent.putExtra("speed",500);
+            intent.putExtra("speed",400);
             startActivity(intent);
             finish();
         });

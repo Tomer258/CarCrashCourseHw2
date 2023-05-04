@@ -6,6 +6,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carcrashcoursehw2.Utilities.DeviceLocationManager;
+import com.example.carcrashcoursehw2.Utilities.SignalGenerator;
 import com.example.carcrashcoursehw2.logic.gameManager;
 import com.example.carcrashcoursehw2.logic.Lane;
 
@@ -124,6 +126,12 @@ public class game_content extends AppCompatActivity implements SensorEventListen
     {
         sensorManager = (SensorManager) getSystemService(this.SENSOR_SERVICE);
         gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        if (gyroscope==null)
+        {
+            SignalGenerator.getInstance().toast("Gyroscope sensor is not available on the device",0 );
+            finish();
+        }
+
     }
 
     private void setBtnOnClicks() {
@@ -140,17 +148,19 @@ public class game_content extends AppCompatActivity implements SensorEventListen
             float x = event.values[0];
             float y = event.values[1];
             float z = event.values[2];
-
-            float deltaRoll = y * (180 / (float) Math.PI) * (event.timestamp - rollAngle) / 1000000000.0f;
+            float roll = z * (180 / (float) Math.PI) * (event.timestamp - rollAngle) / 1000000000.0f;
             rollAngle = event.timestamp;
-
-            if (deltaRoll < -5) {
-                // Phone is rolled left
-                gm.moveCar(0);
-            } else if (deltaRoll > 5) {
-                // Phone is rolled right
+            if (roll < -2.0f)
+            {
+                Log.d("Sensor movement!!!!","MOVING RIGHT");
                 gm.moveCar(1);
-            } else {
+            }
+            else if (roll > 2.0f)
+            {
+                gm.moveCar(0);
+                Log.d("Sensor movement!!!!","MOVING LEFT");
+            }
+            else {
                 // Phone is not rolled
             }
         }

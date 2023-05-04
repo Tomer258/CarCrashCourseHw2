@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Looper;
+import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -92,9 +93,11 @@ public class DeviceLocationManager {
                     android.Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED)
             {
+                Log.i("Location Permission Status: ","PERMISSION_GRANTED");
             }
             else
             {
+                Log.i("Location Permission Status: ","Asking for permission");
                 ActivityCompat.requestPermissions(activity,
                         new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                         1);
