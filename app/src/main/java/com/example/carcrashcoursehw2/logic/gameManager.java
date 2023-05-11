@@ -36,6 +36,11 @@ public class gameManager {
    ScoreModel scoreModel;
    ScoreList scoreList;
    private  final int POINTS_ADD = 10;
+
+   public final int SPEED_SLOW = 650,
+           SPEED_FAST = 500,
+           SPEED_GROW = 50,
+           SPEED_MIN = 300;
    Random r = new Random();
    private final int SCORE_ADD=8;
    private final TextView score,points;
@@ -375,5 +380,22 @@ public class gameManager {
       if (mediaPlayer!=null) mediaPlayer.release();
       mediaPlayer = MediaPlayer.create(c, R.raw.crash);
       mediaPlayer.start();
+   }
+
+   public void changeSpeed(int speed)
+   {
+      if (speed==1)
+      {
+         if (delay < SPEED_SLOW)
+            delay += SPEED_GROW;
+      }
+      else if (speed ==0)
+      {
+         if (delay > SPEED_MIN)
+            delay -= SPEED_GROW;
+      }
+
+
+
    }
 }

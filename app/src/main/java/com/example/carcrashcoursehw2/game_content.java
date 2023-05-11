@@ -15,8 +15,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.carcrashcoursehw2.Interfaces.StepCallback;
 import com.example.carcrashcoursehw2.Utilities.DeviceLocationManager;
 import com.example.carcrashcoursehw2.Utilities.SignalGenerator;
+import com.example.carcrashcoursehw2.Utilities.StepDetector;
 import com.example.carcrashcoursehw2.logic.gameManager;
 import com.example.carcrashcoursehw2.logic.Lane;
 
@@ -28,6 +30,9 @@ public class game_content extends AppCompatActivity implements SensorEventListen
     private Sensor gyroscope;
     private float rollAngle = 0.0f;
     private int workMod=2;
+    private StepDetector stepDetector;
+
+
 
     private gameManager gm;
     @Override
@@ -43,7 +48,11 @@ public class game_content extends AppCompatActivity implements SensorEventListen
     protected void onPause() {
         super.onPause();
         if (workMod==1)
-            sensorManager.unregisterListener(this);
+        {
+            //sensorManager.unregisterListener(this);
+            stepDetector.stop();
+        }
+
         gm.killHandler();
     }
 
@@ -57,7 +66,11 @@ public class game_content extends AppCompatActivity implements SensorEventListen
     protected void onResume() {
         super.onResume();
         if (workMod==1)
-            sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
+        {
+           // sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
+            stepDetector.start();
+        }
+
         gm.restartHandler();
     }
 
@@ -124,14 +137,34 @@ public class game_content extends AppCompatActivity implements SensorEventListen
 
     private void initialSensor()
     {
-        sensorManager = (SensorManager) getSystemService(this.SENSOR_SERVICE);
-        gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        if (gyroscope==null)
-        {
-            SignalGenerator.getInstance().toast("Gyroscope sensor is not available on the device",0 );
-            finish();
-        }
+        //sensorManager = (SensorManager) getSystemService(this.SENSOR_SERVICE);
+        //gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+       // if (gyroscope==null)
+        //{
+            //SignalGenerator.getInstance().toast("Gyroscope sensor is not available on the device",0 );
+           // finish();
+       // }
+        stepDetector = new StepDetector(this, new StepCallback() {
+            @Override
+            public void xUp() {
+                gm.moveCar(1);
+            }
 
+            @Override
+            public void xDown() {
+                gm.moveCar(0);
+            }
+
+            @Override
+            public void yUp() {
+                gm.changeSpeed(1);
+            }
+
+            @Override
+            public void yDown() {
+                gm.changeSpeed(0);
+            }
+        });
     }
 
     private void setBtnOnClicks() {
@@ -144,7 +177,7 @@ public class game_content extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+        /*if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
             float x = event.values[0];
             float y = event.values[1];
             float z = event.values[2];
@@ -164,7 +197,7 @@ public class game_content extends AppCompatActivity implements SensorEventListen
                 // Phone is not rolled
             }
 
-        }
+        }*/
     }
 
     @Override
