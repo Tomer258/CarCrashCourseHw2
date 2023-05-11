@@ -31,10 +31,10 @@ public class MapFragment extends Fragment {
 
     public void showUserLocation(double x,double y) {
         gMap.clear();
-        LatLng marker = new LatLng(x,y);
+        LatLng point = new LatLng(x,y);
         gMap.addMarker(new MarkerOptions()
-                .position(marker));
-        gMap.moveCamera(CameraUpdateFactory.newLatLng(marker));
-        gMap.animateCamera(CameraUpdateFactory.zoomTo(17.0f));
+                .position(point));
+        gMap.moveCamera(CameraUpdateFactory.newLatLng(point));
+        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(point, 17.0f));
     }
 }
