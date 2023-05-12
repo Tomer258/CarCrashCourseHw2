@@ -50,6 +50,7 @@ public class gameManager {
    private final Context c;
    Vibrator vibrator;
    private MediaPlayer mediaPlayer;
+   private MediaPlayer mediaPlayer2;
 
    Handler handler1 = new Handler();
 
@@ -64,6 +65,8 @@ public class gameManager {
       this.points=points;
       mediaPlayer=MediaPlayer.create(c, R.raw.crash);
       this.delay=delay;
+      mediaPlayer= MediaPlayer.create(c, R.raw.coin);
+      mediaPlayer2= MediaPlayer.create(c, R.raw.crash);
    }
 
    public void moveCar(int direction)//1 = Right, 0 = Left, Works only with 5 Lanes!!!!!
@@ -371,15 +374,11 @@ public class gameManager {
    }
    private void playCoin()
    {
-      if (mediaPlayer!=null) mediaPlayer.release();
-      mediaPlayer = MediaPlayer.create(c, R.raw.coin);
       mediaPlayer.start();
    }
    private void playCrash()
    {
-      if (mediaPlayer!=null) mediaPlayer.release();
-      mediaPlayer = MediaPlayer.create(c, R.raw.crash);
-      mediaPlayer.start();
+      mediaPlayer2.start();
    }
 
    public void changeSpeed(int speed)
