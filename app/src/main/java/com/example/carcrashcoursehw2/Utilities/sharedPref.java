@@ -34,14 +34,5 @@ public class sharedPref {
         editor.apply();
     }
 
-    public int getInt(String key, int value) {
-        return sharedPreferences.getInt(key, value);
-    }
-
-    public void putInt(String key, int value) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(key, value);
-        editor.apply();
-    }
 }
 

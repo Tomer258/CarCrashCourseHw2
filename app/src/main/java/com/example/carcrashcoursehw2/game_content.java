@@ -1,12 +1,10 @@
 package com.example.carcrashcoursehw2;
 
-import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -17,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carcrashcoursehw2.Interfaces.StepCallback;
 import com.example.carcrashcoursehw2.Utilities.DeviceLocationManager;
-import com.example.carcrashcoursehw2.Utilities.SignalGenerator;
 import com.example.carcrashcoursehw2.Utilities.StepDetector;
 import com.example.carcrashcoursehw2.logic.gameManager;
 import com.example.carcrashcoursehw2.logic.Lane;

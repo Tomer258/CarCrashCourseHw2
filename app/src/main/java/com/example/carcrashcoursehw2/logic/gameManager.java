@@ -2,11 +2,9 @@ package com.example.carcrashcoursehw2.logic;
 
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
@@ -18,27 +16,18 @@ import android.widget.Toast;
 import com.example.carcrashcoursehw2.GameEnd;
 import com.example.carcrashcoursehw2.R;
 import com.example.carcrashcoursehw2.RecyclerView.ScoreList;
-import com.example.carcrashcoursehw2.RecyclerView.ScoreModel;
 import com.example.carcrashcoursehw2.Utilities.DeviceLocationManager;
 import com.example.carcrashcoursehw2.Utilities.SignalGenerator;
 import com.example.carcrashcoursehw2.Utilities.sharedPref;
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.paz.prefy_lib.Prefy;
-
-import java.util.ArrayList;
 import java.util.Random;
 
 
 public class gameManager {
-   Prefy prefy= Prefy.getInstance();
-   ScoreModel scoreModel;
    ScoreList scoreList;
    private  final int POINTS_ADD = 10;
 
    public final int SPEED_SLOW = 650,
-           SPEED_FAST = 500,
            SPEED_GROW = 50,
            SPEED_MIN = 300;
    Random r = new Random();

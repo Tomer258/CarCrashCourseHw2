@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carcrashcoursehw2.Interfaces.CallBack_sendXY;
 import com.example.carcrashcoursehw2.R;
-import com.google.gson.Gson;
-import com.paz.prefy_lib.Prefy;
+
 
 import java.util.ArrayList;
 
@@ -58,10 +57,6 @@ public class Score_RecyclerViewAdapter extends RecyclerView.Adapter<Score_Recycl
     @Override
     public int getItemCount() {
         return this.scores==null ? 0:this.scores.size();
-    }
-    public ScoreModel getItem(int position)
-    {
-        return this.scores.get(position);
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{

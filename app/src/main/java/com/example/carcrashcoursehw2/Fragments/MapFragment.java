@@ -25,6 +25,7 @@ public class MapFragment extends Fragment {
 
         View view=inflater.inflate(R.layout.fragment_map,container,false);
         SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        assert supportMapFragment != null;
         supportMapFragment.getMapAsync(googleMap -> gMap = googleMap);
         return view;
     }
